@@ -1,2 +1,2 @@
-# trabalho-algoritmos
-trabalho
+# Jogo - Termo
+Trabalho - Algoritmos 1
