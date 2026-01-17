@@ -1,2 +1,36 @@
 #include <iostream>
+#include <fstream> //funçao ifstream
 using namespace std;
+
+#define NUMERO_DE_LETRAS 6
+
+void TelaDeInicio()
+{
+    cout << "===========================================================================================\n"; 
+    cout << "                                    JOGO TERMO  \n"; 
+    cout << "===========================================================================================\n"; 
+    cout << "Regras:\n"; 
+    cout << " - Você tem 10 tentativas.\n"; 
+    cout << " - Cada palavra deve ter 6 letras.\n"; 
+    cout << " - Para letras corretas o símbolo “o” aparecerá logo abaixo do caractere\n"; 
+    cout << " - Para letras certas na posição errada o símbolo x aparecerá logo abaixo do caractere.\n"; 
+    cout << " - Para Letras incorretas o símbolo _ aparecerá logo abaixo do caractere.\n"; 
+    cout << "===========================================================================================\n"; 
+    cout << "Pressione ENTER para começar.\n"; cin.ignore(); // espera apertar ENTER
+}
+void PegaTentativa()
+{
+    char Tentativa[NUMERO_DE_LETRAS + 1]
+    cin.getline(Tentativa, NUMERO_DE_LETRAS + 1);
+}
+void ValidaTentativa(char Tentativa[7])
+{
+    
+}
+
+int main()
+{
+    TelaDeInicio();
+
+    return 0;
+}
