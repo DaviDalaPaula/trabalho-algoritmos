@@ -19,8 +19,22 @@ int gerarPosicaoDaPalavraSecreta(){
     return posicaoDaPalavraSecreta;
 }
 
-void testaTentativa(char tentativa[NUMERO_DE_LETRAS + 1], char palavraSecreta[NUMERO_DE_LETRAS + 1]){
-    
+void feedbackTentativa(char tentativa[NUMERO_DE_LETRAS + 1], char palavraSecreta[NUMERO_DE_LETRAS + 1]){
+    for (int j = 0; j < NUMERO_DE_LETRAS; j++){
+        for (int j2 = 0; j2 < NUMERO_DE_LETRAS; j2++){
+            if (tentativa[j] == palavraSecreta[j]){
+                cout << "O";
+                break;
+            }
+            else if (tentativa[j] == palavraSecreta[j2] && j != j2){
+                cout << "X";
+                break;
+            }
+            else {
+                cout << "_";
+            }
+        }
+    }
 }
 
 bool validaTentativa(char tentativa[NUMERO_DE_LETRAS + 1]){
@@ -90,12 +104,14 @@ int main(){
     telaDeInicio();
 
     char tentativa[NUMERO_DE_LETRAS + 1];
-    do {
+    for (int turno = 1; turno <= 10; turno++){
         cin.getline(tentativa, NUMERO_DE_LETRAS + 1);
-        validaTentativa(tentativa);
-    } while (validaTentativa(tentativa) == false);
-
-    testaTentativa(tentativa, palavraSecreta);
+        if (validaTentativa(tentativa) == false){
+            turno--;
+            continue;
+        }
+        feedbackTentativa(tentativa, palavraSecreta);
+    }    
 
     return 0;
 }
