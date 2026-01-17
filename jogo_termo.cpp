@@ -32,19 +32,37 @@ void feedbackTentativa(char tentativa[NUMERO_DE_LETRAS + 1], char palavraSecreta
             }
             else {
                 cout << "_";
+                break;
             }
         }
     }
+    cout << endl;
+}
+
+bool acertou(char tentativa[NUMERO_DE_LETRAS + 1], char palavraSecreta[NUMERO_DE_LETRAS + 1]){
+    bool ganhou = true;
+    for (int j = 0; j < NUMERO_DE_LETRAS; j++){
+        if (tentativa[j] != palavraSecreta[j]){
+            ganhou = false;
+        }
+    }
+    return ganhou;    
 }
 
 bool validaTentativa(char tentativa[NUMERO_DE_LETRAS + 1]){
     for(int i=0; i < NUMERO_DE_LETRAS; i++){
-        if((tentativa[i] < 'a' || tentativa[i] > 'z') && (tentativa[i] < 'A' || tentativa[i] > 'Z')){
+        if(tentativa[i] < 'a' || tentativa[i] > 'z'){
             cout<<"Tentativa inválida, insira apenas letras por favor: ";
             return false;
         }
     }
     return true;
+}
+
+void tornarTodasAsLetrasMinusculas(char tentativa[NUMERO_DE_LETRAS + 1]){
+    for (int j = 0; j < NUMERO_DE_LETRAS; j++){
+        tentativa[j] = tolower(tentativa[j]);
+    }
 }
 
 void telaDeInicio()
@@ -59,7 +77,7 @@ void telaDeInicio()
     cout << " - Para letras certas na posição errada o símbolo \'X\' aparecerá logo abaixo do caractere.\n"; 
     cout << " - Para Letras incorretas o símbolo \'_\' aparecerá logo abaixo do caractere.\n"; 
     cout << "===========================================================================================\n"; 
-    cout << "Pressione ENTER para começar.\n"; cin.ignore(); // espera apertar ENTER
+    cout << "Pressione ENTER para começar"; cin.ignore(); // espera apertar ENTER
 }
 
 void armazenarPalavras(char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1]) {
@@ -104,13 +122,21 @@ int main(){
     telaDeInicio();
 
     char tentativa[NUMERO_DE_LETRAS + 1];
-    for (int turno = 1; turno <= 10; turno++){
+    for (int turno = 1; turno <= 20; turno++){
         cin.getline(tentativa, NUMERO_DE_LETRAS + 1);
+        tornarTodasAsLetrasMinusculas(tentativa);
         if (validaTentativa(tentativa) == false){
             turno--;
             continue;
         }
         feedbackTentativa(tentativa, palavraSecreta);
+        if (acertou(tentativa, palavraSecreta) == true){
+            cout << "Parabéns, você acertou!";
+            break;
+        }
+        else if (turno == 20){
+            cout << "Parabéns, você errou feio!";
+        }
     }    
 
     return 0;
