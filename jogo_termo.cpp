@@ -41,9 +41,9 @@ void telaDeInicio()
     cout << "Regras:\n"; 
     cout << " - Você tem 10 tentativas.\n"; 
     cout << " - Cada palavra deve ter 6 letras.\n"; 
-    cout << " - Para letras corretas o símbolo “o” aparecerá logo abaixo do caractere\n"; 
-    cout << " - Para letras certas na posição errada o símbolo x aparecerá logo abaixo do caractere.\n"; 
-    cout << " - Para Letras incorretas o símbolo _ aparecerá logo abaixo do caractere.\n"; 
+    cout << " - Para letras corretas o símbolo \'O\' aparecerá logo abaixo do caractere\n"; 
+    cout << " - Para letras certas na posição errada o símbolo \'X\' aparecerá logo abaixo do caractere.\n"; 
+    cout << " - Para Letras incorretas o símbolo \'_\' aparecerá logo abaixo do caractere.\n"; 
     cout << "===========================================================================================\n"; 
     cout << "Pressione ENTER para começar.\n"; cin.ignore(); // espera apertar ENTER
 }
