@@ -60,15 +60,17 @@ bool validaTentativaPeloIntervalo(char tentativa[NUMERO_DE_LETRAS + 1]){
 bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[NUMERO_DE_PALAVRAS][NUMERO_DE_LETRAS + 1])
 {
     for(int i=0; i < NUMERO_DE_PALAVRAS; i++){
-        bool palavraEncontrada = true;
+        int contaLetrasIguais = 0;
         for(int j=0; j < NUMERO_DE_LETRAS; j++){
-            if(tentativa[j] != palavrasDe6Letras[i][j]){
-                palavraEncontrada = false;
-                break;
+            if(tentativa[j] == palavrasDe6Letras[i][j]){
+                contaLetrasIguais++;
             }
         }
+        if (contaLetrasIguais == NUMERO_DE_LETRAS){
+            return true;
+        }
     }
-return palavraEncontrada;
+    return false;
 }
 
 void tornarTodasAsLetrasMinusculas(char tentativa[NUMERO_DE_LETRAS + 1]){
