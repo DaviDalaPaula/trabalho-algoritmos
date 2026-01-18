@@ -13,9 +13,9 @@ using namespace std;
 
 char palavrasDe6Letras[NUMERO_DE_PALAVRAS][NUMERO_DE_LETRAS + 1];
 
-int gerarPosicaoDaPalavraSecreta(){
+int gerarPosicaoDaPalavraSecreta(int numeroDePalavrasDe6Letras){
     srand(time(nullptr));
-    int posicaoDaPalavraSecreta = (rand() % 8) + (rand() % 10 * 10) + (rand() % 4 * 100) + (rand() % 2 * 1000) + (rand() % 2 * 10000);
+    int posicaoDaPalavraSecreta = rand() % numeroDePalavrasDe6Letras;
     return posicaoDaPalavraSecreta;
 }
 
@@ -57,9 +57,10 @@ bool validaTentativaPeloIntervalo(char tentativa[NUMERO_DE_LETRAS + 1]){
     }
     return true;
 }
-bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1])
+bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1],
+                                    int numeroDePalavrasDe6Letras)
 {
-    for(int i=0; i < NUMERO_DE_PALAVRAS; i++){
+    for(int i=0; i < numeroDePalavrasDe6Letras; i++){
         int contaLetrasIguais = 0;
         for(int j=0; j < NUMERO_DE_LETRAS; j++){
             if(tentativa[j] == palavrasDe6Letras[i][j]){
@@ -94,11 +95,11 @@ void telaDeInicio()
     cout << "Pressione ENTER para começar"; cin.ignore(); // espera apertar ENTER
 }
 
-void armazenarPalavras(char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1]) {
+int armazenarPalavras(char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1]) {
     ifstream arquivo("../palavras_da_lingua_portuguesa.txt");
     if (!arquivo) {
         cout << "Erro ao abrir arquivo\n";
-        return;
+        return 0;
     }
 
     char palavraTemporaria[47];
@@ -117,6 +118,7 @@ void armazenarPalavras(char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1]) {
             posicaoDaPalavra++;
         }
     }
+    return posicaoDaPalavra;
 }
 
 int main(){
@@ -124,9 +126,10 @@ int main(){
     SetConsoleOutputCP(CP_UTF8);
     setlocale(LC_ALL, "pt_BR.UTF-8");
     
-    armazenarPalavras(palavrasDe6Letras);
+    int numeroDePalavrasDe6Letras = armazenarPalavras(palavrasDe6Letras);
 
-    int posicaoDaPalavraSecreta = gerarPosicaoDaPalavraSecreta();
+    int posicaoDaPalavraSecreta = gerarPosicaoDaPalavraSecreta(numeroDePalavrasDe6Letras);
+
     char palavraSecreta[NUMERO_DE_LETRAS + 1];
     for (int j = 0; j < NUMERO_DE_LETRAS; j++){
         palavraSecreta[j] = palavrasDe6Letras[posicaoDaPalavraSecreta][j];
@@ -138,10 +141,11 @@ int main(){
     char tentativa[NUMERO_DE_LETRAS + 1];
     for (int turno = 1; turno <= 10; turno++)
     {
-        cout << "Tentativa " << turno << ": ";
+        cout << "Tentativa " << turno << ": \n";
         cin.getline(tentativa, NUMERO_DE_LETRAS + 1);
         tornarTodasAsLetrasMinusculas(tentativa);
-        if (validaTentativaPeloIntervalo(tentativa) || validaTentativaPelaExistencia(tentativa, palavrasDe6Letras) == false){
+        if (validaTentativaPeloIntervalo(tentativa) == false || validaTentativaPelaExistencia(tentativa, 
+            palavrasDe6Letras, numeroDePalavrasDe6Letras) == false){
             turno--;
             cout << "Tentativa inválida. Tente novamente." << endl;
             continue;
@@ -153,7 +157,8 @@ int main(){
             break;
         }
         else if (turno == 10){
-            cout << "Parabéns, você errou feio!";
+            cout << "Parabéns, você errou feio!\n";
+            cout << "A palavra secreta era: " << palavraSecreta;
         }
     }    
 
