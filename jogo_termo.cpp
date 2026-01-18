@@ -21,19 +21,21 @@ int gerarPosicaoDaPalavraSecreta(int numeroDePalavrasDe6Letras){
 
 void feedbackTentativa(char tentativa[NUMERO_DE_LETRAS + 1], char palavraSecreta[NUMERO_DE_LETRAS + 1]){
     for (int j = 0; j < NUMERO_DE_LETRAS; j++){
+        bool naoExiste = true;
         for (int j2 = 0; j2 < NUMERO_DE_LETRAS; j2++){
             if (tentativa[j] == palavraSecreta[j]){
                 cout << "O";
+                naoExiste = false;
                 break;
             }
             else if (tentativa[j] == palavraSecreta[j2] && j != j2){
                 cout << "X";
+                naoExiste = false;
                 break;
             }
-            else {
-                cout << "_";
-                break;
-            }
+        }
+        if (naoExiste == true){
+            cout << "_";
         }
     }
     cout << endl;
@@ -57,8 +59,7 @@ bool validaTentativaPeloIntervalo(char tentativa[NUMERO_DE_LETRAS + 1]){
     }
     return true;
 }
-bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1],
-                                    int numeroDePalavrasDe6Letras)
+bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1], int numeroDePalavrasDe6Letras)
 {
     for(int i=0; i < numeroDePalavrasDe6Letras; i++){
         int contaLetrasIguais = 0;
