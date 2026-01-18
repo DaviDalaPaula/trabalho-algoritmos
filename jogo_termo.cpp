@@ -22,7 +22,7 @@ int gerarPosicaoDaPalavraSecreta(){
 void feedbackTentativa(char tentativa[NUMERO_DE_LETRAS + 1], char palavraSecreta[NUMERO_DE_LETRAS + 1]){
     for (int j = 0; j < NUMERO_DE_LETRAS; j++){
         for (int j2 = 0; j2 < NUMERO_DE_LETRAS; j2++){
-            if (tentativa[j] == palavraSecreta[j]){
+            if (tentativa[j] == palavraSecreta[j2]){
                 cout << "O";
                 break;
             }
@@ -49,14 +49,26 @@ bool acertou(char tentativa[NUMERO_DE_LETRAS + 1], char palavraSecreta[NUMERO_DE
     return ganhou;    
 }
 
-bool validaTentativa(char tentativa[NUMERO_DE_LETRAS + 1]){
+bool validaTentativaPeloIntervalo(char tentativa[NUMERO_DE_LETRAS + 1]){
     for(int i=0; i < NUMERO_DE_LETRAS; i++){
         if(tentativa[i] < 'a' || tentativa[i] > 'z'){
-            cout<<"Tentativa inválida, insira apenas letras por favor: ";
             return false;
         }
     }
     return true;
+}
+bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[NUMERO_DE_PALAVRAS][NUMERO_DE_LETRAS + 1])
+{
+    for(int i=0; i < NUMERO_DE_PALAVRAS; i++){
+        bool palavraEncontrada = true;
+        for(int j=0; j < NUMERO_DE_LETRAS; j++){
+            if(tentativa[j] != palavrasDe6Letras[i][j]){
+                palavraEncontrada = false;
+                break;
+            }
+        }
+    }
+return palavraEncontrada;
 }
 
 void tornarTodasAsLetrasMinusculas(char tentativa[NUMERO_DE_LETRAS + 1]){
@@ -122,19 +134,22 @@ int main(){
     telaDeInicio();
 
     char tentativa[NUMERO_DE_LETRAS + 1];
-    for (int turno = 1; turno <= 20; turno++){
+    for (int turno = 1; turno <= 10; turno++)
+    {
         cin.getline(tentativa, NUMERO_DE_LETRAS + 1);
         tornarTodasAsLetrasMinusculas(tentativa);
-        if (validaTentativa(tentativa) == false){
+        if (validaTentativaPeloIntervalo(tentativa) || validaTentativaPelaExistencia(tentativa, palavrasDe6Letras) == false){
             turno--;
+            cout << "Tentativa inválida. Tente novamente." << endl;
             continue;
         }
+        else 
         feedbackTentativa(tentativa, palavraSecreta);
         if (acertou(tentativa, palavraSecreta) == true){
             cout << "Parabéns, você acertou!";
             break;
         }
-        else if (turno == 20){
+        else if (turno == 10){
             cout << "Parabéns, você errou feio!";
         }
     }    
