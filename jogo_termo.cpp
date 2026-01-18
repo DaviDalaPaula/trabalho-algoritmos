@@ -22,7 +22,7 @@ int gerarPosicaoDaPalavraSecreta(){
 void feedbackTentativa(char tentativa[NUMERO_DE_LETRAS + 1], char palavraSecreta[NUMERO_DE_LETRAS + 1]){
     for (int j = 0; j < NUMERO_DE_LETRAS; j++){
         for (int j2 = 0; j2 < NUMERO_DE_LETRAS; j2++){
-            if (tentativa[j] == palavraSecreta[j2]){
+            if (tentativa[j] == palavraSecreta[j]){
                 cout << "O";
                 break;
             }
@@ -57,7 +57,7 @@ bool validaTentativaPeloIntervalo(char tentativa[NUMERO_DE_LETRAS + 1]){
     }
     return true;
 }
-bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[NUMERO_DE_PALAVRAS][NUMERO_DE_LETRAS + 1])
+bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1])
 {
     for(int i=0; i < NUMERO_DE_PALAVRAS; i++){
         int contaLetrasIguais = 0;
@@ -138,6 +138,7 @@ int main(){
     char tentativa[NUMERO_DE_LETRAS + 1];
     for (int turno = 1; turno <= 10; turno++)
     {
+        cout << "Tentativa " << turno << ": ";
         cin.getline(tentativa, NUMERO_DE_LETRAS + 1);
         tornarTodasAsLetrasMinusculas(tentativa);
         if (validaTentativaPeloIntervalo(tentativa) || validaTentativaPelaExistencia(tentativa, palavrasDe6Letras) == false){
