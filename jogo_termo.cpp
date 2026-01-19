@@ -141,7 +141,7 @@ int main(){
     char tentativa[NUMERO_DE_LETRAS + 1];
     for (int turno = 1; turno <= 10; turno++){
         cout << "Tentativa " << turno << ": \n";
-        cin.getline(tentativa, NUMERO_DE_LETRAS + 1);
+        cin.getline(tentativa, 20);
         tornarTodasAsLetrasMinusculas(tentativa);
         if (validaTentativaPeloIntervalo(tentativa) == false || validaTentativaPelaExistencia(tentativa, palavrasDe6Letras, numeroDePalavrasDe6Letras) == false){
             turno--;
