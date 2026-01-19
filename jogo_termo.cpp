@@ -6,8 +6,7 @@
 #include <windows.h>
 
 #define NUMERO_DE_PALAVRAS 245366
-#define NUMERO_DE_LETRAS 6
-// 11139 palavrasDe6Letras
+#define NUMERO_DE_LETRAS 6 // 11139 palavrasDe6Letras
 
 using namespace std;
 
@@ -59,8 +58,8 @@ bool validaTentativaPeloIntervalo(char tentativa[NUMERO_DE_LETRAS + 1]){
     }
     return true;
 }
-bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1], int numeroDePalavrasDe6Letras)
-{
+
+bool validaTentativaPelaExistencia(char tentativa[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1], int numeroDePalavrasDe6Letras){
     for(int i=0; i < numeroDePalavrasDe6Letras; i++){
         int contaLetrasIguais = 0;
         for(int j=0; j < NUMERO_DE_LETRAS; j++){
@@ -81,22 +80,22 @@ void tornarTodasAsLetrasMinusculas(char tentativa[NUMERO_DE_LETRAS + 1]){
     }
 }
 
-void telaDeInicio()
-{
+void telaDeInicio(){
     cout << "===========================================================================================\n"; 
     cout << "                                    JOGO TERMO  \n"; 
     cout << "===========================================================================================\n"; 
     cout << "Regras:\n"; 
     cout << " - Você tem 10 tentativas.\n"; 
-    cout << " - Cada palavra deve ter 6 letras.\n"; 
+    cout << " - Cada palavra deve ter 6 letras (SEM ACENTOSanc).\n"; 
     cout << " - Para letras corretas o símbolo \'O\' aparecerá logo abaixo do caractere\n"; 
     cout << " - Para letras certas na posição errada o símbolo \'X\' aparecerá logo abaixo do caractere.\n"; 
     cout << " - Para Letras incorretas o símbolo \'_\' aparecerá logo abaixo do caractere.\n"; 
     cout << "===========================================================================================\n"; 
-    cout << "Pressione ENTER para começar"; cin.ignore(); // espera apertar ENTER
+    cout << "Pressione ENTER para começar"; 
+    cin.ignore();
 }
 
-int armazenarPalavras(char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1]) {
+int armazenarPalavras(char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1]){
     ifstream arquivo("../palavras_da_lingua_portuguesa.txt");
     if (!arquivo) {
         cout << "Erro ao abrir arquivo\n";
@@ -122,37 +121,36 @@ int armazenarPalavras(char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1]) {
     return posicaoDaPalavra;
 }
 
-int main(){
-
-    SetConsoleOutputCP(CP_UTF8);
-    setlocale(LC_ALL, "pt_BR.UTF-8");
-    
-    int numeroDePalavrasDe6Letras = armazenarPalavras(palavrasDe6Letras);
-
-    int posicaoDaPalavraSecreta = gerarPosicaoDaPalavraSecreta(numeroDePalavrasDe6Letras);
-
-    char palavraSecreta[NUMERO_DE_LETRAS + 1];
+void gerarPalavraSecreta(char palavraSecreta[NUMERO_DE_LETRAS + 1], char palavrasDe6Letras[][NUMERO_DE_LETRAS + 1], int posicaoDaPalavraSecreta){
     for (int j = 0; j < NUMERO_DE_LETRAS; j++){
         palavraSecreta[j] = palavrasDe6Letras[posicaoDaPalavraSecreta][j];
     }
     palavraSecreta[NUMERO_DE_LETRAS] = '\0';
+}
 
+int main(){
+    SetConsoleOutputCP(CP_UTF8);
+    setlocale(LC_ALL, "pt_BR.UTF-8");
+    
+    int numeroDePalavrasDe6Letras = armazenarPalavras(palavrasDe6Letras);
+    int posicaoDaPalavraSecreta = gerarPosicaoDaPalavraSecreta(numeroDePalavrasDe6Letras);
+    char palavraSecreta[NUMERO_DE_LETRAS + 1];
+    gerarPalavraSecreta(palavraSecreta, palavrasDe6Letras, posicaoDaPalavraSecreta);
     telaDeInicio();
 
     char tentativa[NUMERO_DE_LETRAS + 1];
-    for (int turno = 1; turno <= 10; turno++)
-    {
+    for (int turno = 1; turno <= 10; turno++){
         cout << "Tentativa " << turno << ": \n";
         cin.getline(tentativa, NUMERO_DE_LETRAS + 1);
         tornarTodasAsLetrasMinusculas(tentativa);
-        if (validaTentativaPeloIntervalo(tentativa) == false || validaTentativaPelaExistencia(tentativa, 
-            palavrasDe6Letras, numeroDePalavrasDe6Letras) == false){
+        if (validaTentativaPeloIntervalo(tentativa) == false || validaTentativaPelaExistencia(tentativa, palavrasDe6Letras, numeroDePalavrasDe6Letras) == false){
             turno--;
             cout << "Tentativa inválida. Tente novamente." << endl;
             continue;
         }
-        else 
-        feedbackTentativa(tentativa, palavraSecreta);
+        else {
+            feedbackTentativa(tentativa, palavraSecreta);
+        }
         if (acertou(tentativa, palavraSecreta) == true){
             cout << "Parabéns, você acertou!";
             break;
