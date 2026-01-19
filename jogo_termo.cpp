@@ -138,7 +138,7 @@ int main(){
     gerarPalavraSecreta(palavraSecreta, palavrasDe6Letras, posicaoDaPalavraSecreta);
     telaDeInicio();
 
-    char tentativa[NUMERO_DE_LETRAS + 1];
+    char tentativa[20];
     for (int turno = 1; turno <= 10; turno++){
         cout << "Tentativa " << turno << ": \n";
         cin.getline(tentativa, 20);
